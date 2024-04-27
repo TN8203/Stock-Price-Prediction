@@ -18,15 +18,15 @@ def get_yahoo_finance_data(ticker, start_date, end_date):
     data = yf.download(tickers=ticker, start=start_date, end=end_date)
     return data
 
-def main():
+# Create dataset folder inside the data directory
+dataset_folder = os.path.join("Stock-Price-Prediction", "data", "dataset")
+if not os.path.exists(dataset_folder):
+    os.makedirs(dataset_folder)
+
+def get_data_train_test():
     """
     Main function to fetch and store stock data from Yahoo Finance.
     """
-    # Create dataset folder inside the data directory
-    dataset_folder = os.path.join("Stock-Price-Prediction", "data", "dataset")
-    if not os.path.exists(dataset_folder):
-        os.makedirs(dataset_folder)
-
     tech_list = ['AAPL']
     for stock in tech_list:
         # Fetch data for training set (from 2019 to January 2024)
@@ -41,5 +41,21 @@ def main():
         test_data = get_yahoo_finance_data(stock, start_date=test_start_date, end_date=test_end_date)
         test_data.to_csv(os.path.join(dataset_folder, f"{stock}_test.csv"))
 
+def get_apple_data(start_date, end_date):
+    """
+    Fetches Apple stock data from Yahoo Finance.
+
+    Args:
+        start_date (datetime): The start date for fetching data.
+        end_date (datetime): The end date for fetching data.
+
+    Returns:
+        pd.DataFrame: Apple stock data fetched from Yahoo Finance.
+    """
+    apple_data = get_yahoo_finance_data("AAPL", start_date, end_date)
+    apple_data.to_csv(os.path.join(dataset_folder, "APPL.csv"))
+    return apple_data
+
 if __name__ == "__main__":
-    main()
+    # get_data_train_test()
+    get_apple_data(start_date=datetime(2019, 1, 1), end_date=datetime(2024, 4, 15))
