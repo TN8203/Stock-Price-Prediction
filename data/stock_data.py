@@ -56,6 +56,12 @@ def get_apple_data(start_date, end_date):
     apple_data.to_csv(os.path.join(dataset_folder, "APPL.csv"))
     return apple_data
 
+def get_data_for_info_sentiment(start_date, end_date):
+    apple_data = get_yahoo_finance_data("AAPL", start_date, end_date)
+    apple_data.to_csv(os.path.join(dataset_folder, "APPL_stocks.csv"))
+    return apple_data
+    
 if __name__ == "__main__":
     # get_data_train_test()
-    get_apple_data(start_date=datetime(2019, 1, 1), end_date=datetime(2024, 4, 15))
+    # get_apple_data(start_date=datetime(2019, 1, 1), end_date=datetime(2024, 4, 15))
+    get_data_for_info_sentiment(start_date=datetime(2024, 3, 28), end_date=datetime(2024, 5, 1))
